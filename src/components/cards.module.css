@@ -1,0 +1,21 @@
+.mainCard{
+    padding-left: 345px;
+    margin-top: 50px;
+}
+.card{
+    margin: 50px;
+    min-width: 350px;
+    text-align: center;
+    
+}
+.infected{
+    border-bottom :  10px solid blue ;
+    
+   
+}
+.recovered{
+    border-bottom:  10px solid green;
+}
+.death{
+    border-bottom:  10px solid red;
+}
