@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const url = 'https://covid19.mathdro.id/api'; 
+// from where we are getting the country
 
 export const fetchData = async (country) => {
             let  changeableUrl = url
@@ -9,25 +10,32 @@ export const fetchData = async (country) => {
             }
             try {
                 const res = await axios.get(changeableUrl)
-                // console.log(res)
-                return res;
+                const {confirmed,deaths,recovered} = res.data
+                let fetchedData = {confirmed,deaths,recovered} 
+                return fetchedData;
                 
             } catch (err) {
                 console.error(err)
                 
             }
 }
+fetchData()
 
 export const fetchDailyData = async () =>{
    try {
     const {data} = await axios.get(`${url}/daily`)
     // console.log(data)
-    // why we use bracket in in call back fnc or outside the object
-    const modifiedData = data.map((dailyData)=> ({
+    // why we use bracket in  call back fnc or outside the object
+    const modifiedData = data.map((dailyData)=> (
+        {
         Confirmed:dailyData.confirmed.total, 
         Death:dailyData.deaths.total,
-        Date:dailyData.reportDate }) )
+        Date:dailyData.reportDate 
+    }
+        )
+        )
         return modifiedData
+        
     
    } catch (error) {
     console.error(error)
@@ -36,10 +44,14 @@ export const fetchDailyData = async () =>{
 // console.log(fetchDailyData)
 export const fetchCountries = async () =>{
     try {
-     const res = await axios.get(`${url}/countries`)
-     console.log(res)
+     const {data:{countries}} = await axios.get(`${url}/countries`)
+    //  why we have return to this
+     return countries.map((country)=>country.name)
+
+    //  console.log()
      
     } catch (error) {
      console.error(error)
     }
  }
+ 
